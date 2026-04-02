@@ -218,36 +218,118 @@ function toggleRegConfirmPassword() {
   }
 }
 
-// Register form submission
-document.getElementById('registerForm').addEventListener('submit', function(e) {
+
+// ===== LOGIN SUBMIT =====
+document.getElementById('loginForm').addEventListener('submit', async function(e) {
   e.preventDefault();
 
-  const first = document.getElementById('regFirstName').value.trim();
-  const last = document.getElementById('regLastName').value.trim();
-  const email = document.getElementById('regEmail').value.trim();
-  const password = document.getElementById('regPassword').value;
-  const confirm = document.getElementById('regConfirmPassword').value;
-  const agreed = document.getElementById('agreeTerms').checked;
+  const btn = this.querySelector('button[type="submit"]');
+  btn.textContent = 'Signing in...';
+  btn.disabled = true;
 
-  if (!first || !last || !email || !password) {
-    showToast('Please fill in all required fields.', 'error');
-    return;
-  }
-  if (password !== confirm) {
-    showToast('Passwords do not match.', 'error');
-    return;
-  }
-  if (!agreed) {
-    showToast('Please agree to the Terms & Conditions.', 'error');
-    return;
-  }
+  const payload = {
+    email:    document.getElementById('loginEmail').value.trim(),
+    password: document.getElementById('loginPassword').value,
+  };
 
-  // ✅ Replace this block with your backend API call
-  showToast('Account created successfully! Please sign in.', 'success');
-  closeRegisterModal();
-  setTimeout(() => openLoginModal(), 300);
-  this.reset();
+  try {
+    const res  = await fetch('login.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    const data = await res.json();
+
+    if (data.success) {
+      localStorage.setItem('firstName', data.user.name.split(' ')[0]);
+      localStorage.setItem('role', data.user.role); 
+      showToast(data.message, 'success');
+      closeLoginModal();
+      setTimeout(() => {
+        window.location.href = 'index.html'; 
+      }, 1000);
+    } else {
+      showToast(data.message, 'error');
+    }
+  } catch (err) {
+    showToast('Network error. Please try again.', 'error');
+  } finally {
+    btn.textContent = 'Sign In';
+    btn.disabled = false;
+  }
 });
+
+// ===== REGISTER SUBMIT =====
+document.getElementById('registerForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+
+  const agree = document.getElementById('agreeTerms');
+  if (!agree.checked) {
+    showToast('You must agree to the Terms & Conditions.');
+    return;
+  }
+
+  const btn = this.querySelector('button[type="submit"]');
+  btn.textContent = 'Creating account...';
+  btn.disabled = true;
+
+  const payload = {
+    first_name:       document.getElementById('regFirstName').value.trim(),
+    last_name:        document.getElementById('regLastName').value.trim(),
+    email:            document.getElementById('regEmail').value.trim(),
+    phone:            document.getElementById('regPhone').value.trim(),
+    password:         document.getElementById('regPassword').value,
+    confirm_password: document.getElementById('regConfirmPassword').value,
+  };
+
+  try {
+    const res  = await fetch('register.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    const data = await res.json();
+
+    if (data.success) {
+      showToast(data.message);
+      closeRegisterModal();
+      this.reset();
+      setTimeout(() => openLoginModal(), 1000);
+      
+    } else {
+      showToast(data.message);
+    }
+  } catch (err) {
+    showToast('Network error. Please try again.');
+  } finally {
+    btn.textContent = 'Create Account';
+    btn.disabled = false;
+  }
+});
+
+/* =================================================================
+   SESSION CHECK — replace Login button with first name
+   ================================================================= */
+function checkSession() {
+  const firstName = localStorage.getItem('firstName');
+
+  if (firstName) {
+    ['loginBtn', 'loginBtnMobile'].forEach(id => {
+      const btn = document.getElementById(id);
+      if (btn) {
+        btn.textContent = firstName;
+        btn.setAttribute('onclick', ''); 
+        btn.addEventListener('click', function(e) {
+          e.preventDefault();
+          localStorage.clear();
+          window.location.href = 'logout.php';
+        });
+      }
+    });
+  }
+}
+
+document.addEventListener('DOMContentLoaded', checkSession);
 
 /* =================================================================
    SCROLL REVEAL — simple intersection observer for cards

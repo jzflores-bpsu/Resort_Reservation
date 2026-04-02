@@ -751,81 +751,7 @@ em { font-style: italic; color: var(--ocean); }
 /* =================================================================
    LOGIN MODAL
    ================================================================= */
-
-
-/* =================================================================
-   TOAST NOTIFICATION
-   ================================================================= */
-.toast {
-  position: fixed;
-  bottom: 28px;
-  right: 28px;
-  background: var(--text-dark);
-  color: var(--white);
-  padding: 14px 24px;
-  border-radius: 10px;
-  font-size: .88rem;
-  box-shadow: 0 8px 32px rgba(0,0,0,.25);
-  transform: translateY(80px);
-  opacity: 0;
-  transition: transform .35s ease, opacity .35s ease;
-  z-index: 10000;
-  pointer-events: none;
-  max-width: 340px;
-}
-.toast.show { transform: translateY(0); opacity: 1; }
-.toast.success { border-left: 4px solid var(--success); }
-.toast.error   { border-left: 4px solid var(--error); }
-
-/* =================================================================
-   RESPONSIVE — TABLET (max 1024px)
-   ================================================================= */
-@media (max-width: 1024px) {
-  .rooms-grid     { grid-template-columns: repeat(2, 1fr); }
-  .amenities-grid { grid-template-columns: repeat(2, 1fr); }
-  .about-grid     { gap: 48px; }
-  .footer-grid    { grid-template-columns: 1fr 1fr; }
-  .booking-form   { grid-template-columns: repeat(2, 1fr); }
-  .booking-form .btn-primary { grid-column: 1 / -1; }
-}
-
-/* =================================================================
-   RESPONSIVE — MOBILE (max 768px)
-   ================================================================= */
-@media (max-width: 768px) {
-  .nav-links, .nav-cta { display: none; }
-  .hamburger { display: flex; }
-
-  .hero-buttons { flex-direction: column; align-items: center; }
-
-  .about-grid     { grid-template-columns: 1fr; }
-  .about-image img { height: 320px; }
-  .about-badge    { bottom: -16px; right: 16px; }
-
-  .rooms-grid     { grid-template-columns: 1fr; }
-  .amenities-grid { grid-template-columns: 1fr; }
-  .events-grid    { grid-template-columns: 1fr; }
-
-  .contact-grid   { grid-template-columns: 1fr; }
-  .form-row       { grid-template-columns: 1fr; }
-
-  .footer-grid    { grid-template-columns: 1fr; gap: 32px; }
-
-  .reservation-card { padding: 32px 24px; }
-  .booking-form { grid-template-columns: 1fr; }
-
-  .dining-content { text-align: center; }
-
-  .billing-panel  { padding: 36px 24px; }
-  .modal-box      { padding: 36px 28px; }
-}
-
-@media (max-width: 480px) {
-  .amenities-grid { grid-template-columns: 1fr; }
-  .hero-title     { font-size: 2rem; }
-}
-
-/* ===== LOGIN MODAL ===== */
+  /* ===== LOGIN MODAL ===== */
 .modal-overlay {
   display: none;
   position: fixed;
@@ -966,4 +892,78 @@ em { font-style: italic; color: var(--ocean); }
   width: 100%;
   box-sizing: border-box;
 }
+
+/* =================================================================
+   TOAST NOTIFICATION
+   ================================================================= */
+.toast {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  background: var(--text-dark);
+  color: var(--white);
+  padding: 14px 24px;
+  border-radius: 10px;
+  font-size: .88rem;
+  box-shadow: 0 8px 32px rgba(0,0,0,.25);
+  transform: translateY(80px);
+  opacity: 0;
+  transition: transform .35s ease, opacity .35s ease;
+  z-index: 10000;
+  pointer-events: none;
+  max-width: 340px;
+}
+.toast.show { transform: translateY(0); opacity: 1; }
+.toast.success { border-left: 4px solid var(--success); }
+.toast.error   { border-left: 4px solid var(--error); }
+
+/* =================================================================
+   RESPONSIVE — TABLET (max 1024px)
+   ================================================================= */
+@media (max-width: 1024px) {
+  .rooms-grid     { grid-template-columns: repeat(2, 1fr); }
+  .amenities-grid { grid-template-columns: repeat(2, 1fr); }
+  .about-grid     { gap: 48px; }
+  .footer-grid    { grid-template-columns: 1fr 1fr; }
+  .booking-form   { grid-template-columns: repeat(2, 1fr); }
+  .booking-form .btn-primary { grid-column: 1 / -1; }
+}
+
+/* =================================================================
+   RESPONSIVE — MOBILE (max 768px)
+   ================================================================= */
+@media (max-width: 768px) {
+  .nav-links, .nav-cta { display: none; }
+  .hamburger { display: flex; }
+
+  .hero-buttons { flex-direction: column; align-items: center; }
+
+  .about-grid     { grid-template-columns: 1fr; }
+  .about-image img { height: 320px; }
+  .about-badge    { bottom: -16px; right: 16px; }
+
+  .rooms-grid     { grid-template-columns: 1fr; }
+  .amenities-grid { grid-template-columns: 1fr; }
+  .events-grid    { grid-template-columns: 1fr; }
+
+  .contact-grid   { grid-template-columns: 1fr; }
+  .form-row       { grid-template-columns: 1fr; }
+
+  .footer-grid    { grid-template-columns: 1fr; gap: 32px; }
+
+  .reservation-card { padding: 32px 24px; }
+  .booking-form { grid-template-columns: 1fr; }
+
+  .dining-content { text-align: center; }
+
+  .billing-panel  { padding: 36px 24px; }
+  .modal-box      { padding: 36px 28px; }
+}
+
+@media (max-width: 480px) {
+  .amenities-grid { grid-template-columns: 1fr; }
+  .hero-title     { font-size: 2rem; }
+}
+
+
 
